@@ -33,18 +33,87 @@ function XoxGameComponent() {
   }
 
   const markGame = (index) => {
-    if(!isGameFinish){
+    if (!isGameFinish) {
 
 
-    const newGames = [...games];
-    if (newGames[index] == "") {
-      newGames[index] = mark;
-      setGames(newGames);
-      mark == "X" ? setMark("0") : setMark("X");
-      setMessage("Hamle Sirasi: " + (mark == "X" ? "O" : "X"));
+      const newGames = [...games];
+      if (newGames[index] == "") {
+        newGames[index] = mark;
+        setGames(newGames);
+
+        let e=isMoveFinish(newGames);
+        if(e){
+          setMessage("Oyun berabere");
+          setIsGameFinish(true);
+          return;
+        }
+
+        let r =isGameOver(newGames);
+        if(r){
+          setMessage("Oyunu "+ mark + " kazandi!");
+          setIsGameFinish(true);
+          return;
+        }
+        mark == "X" ? setMark("0") : setMark("X");
+        setMessage("Hamle Sirasi: " + (mark == "X" ? "O" : "X"));
+      }
     }
   }
+
+  const isGameOver=(newGames)=>{
+    if(newGames[0] != ""
+    && newGames[0] === newGames[1]
+    && newGames[1] ===newGames[2]){
+      return true;
+    }
+    if(newGames[3] != ""
+    && newGames[3] === newGames[3]
+    && newGames[4] ===newGames[5]){
+      return true;
+    }
+    if(newGames[6] != ""
+    && newGames[6] === newGames[7]
+    && newGames[7] ===newGames[8]){
+      return true;
+    }
+    if(newGames[0] != ""
+    && newGames[0] === newGames[3]
+    && newGames[3] ===newGames[6]){
+      return true;
+    }
+    if(newGames[1] != ""
+    && newGames[1] === newGames[4]
+    && newGames[4] ===newGames[7]){
+      return true;
+    }
+    if(newGames[2] != ""
+    && newGames[2] === newGames[5]
+    && newGames[5] ===newGames[8]){
+      return true;
+    }
+    if(newGames[0] != ""
+    && newGames[0] === newGames[4]
+    && newGames[4] ===newGames[8]){
+      return true;
+    }
+    if(newGames[2] != ""
+    && newGames[2] === newGames[4]
+    && newGames[4] ===newGames[6]){
+      return true;
+    }
   }
+
+    function isMoveFinish(newGames){
+      for (let i = 0; i < newGames.length; i++) {
+        const element = newGames[i];
+        if(element === ""){
+          return false;
+        }
+      }
+      return true;
+    }
+
+
 
   return (
     <>
